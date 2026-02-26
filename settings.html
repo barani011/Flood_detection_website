@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - CCTV Flood Detection Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="settings-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="settings-page">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area"></div>
+            <div class="nav-items">
+                <div class="nav-item" onclick="window.location.href='index.html'">
+                    <i class="fas fa-th"></i>
+                </div>
+                <div class="nav-item" onclick="window.location.href='detail.html'">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="nav-item active">
+                    <i class="fas fa-cog"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content settings-content">
+            <!-- Header -->
+            <header class="top-header">
+                <h1 class="greeting">Settings & Configuration</h1>
+                <div class="header-controls">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search settings">
+                    </div>
+                    <div class="theme-toggle">
+                        <input type="checkbox" id="themeCheckbox" class="theme-checkbox">
+                        <label for="themeCheckbox" class="theme-label">
+                            <span class="toggle-circle">
+                                <i class="fas fa-sun sun-icon"></i>
+                                <i class="fas fa-moon moon-icon"></i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="profile-avatar" onclick="window.location.href='login.html'">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Settings Grid -->
+            <div class="settings-grid">
+                <!-- Camera Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <i class="fas fa-camera"></i>
+                        <h2>Camera Settings</h2>
+                    </div>
+                    <div class="settings-items">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Resolution</label>
+                                <p>Camera video quality</p>
+                            </div>
+                            <select class="setting-select">
+                                <option>1080p (Full HD)</option>
+                                <option>720p (HD)</option>
+                                <option>480p (SD)</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>FPS (Frames Per Second)</label>
+                                <p>Higher FPS for smoother video</p>
+                            </div>
+                            <select class="setting-select">
+                                <option>30 FPS</option>
+                                <option>24 FPS</option>
+                                <option>15 FPS</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Night Vision</label>
+                                <p>Enable infrared mode</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <i class="fas fa-bell"></i>
+                        <h2>Alert Settings</h2>
+                    </div>
+                    <div class="settings-items">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Flood Alert Threshold</label>
+                                <p>Trigger alert when flood level exceeds</p>
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" min="10" max="100" value="50" class="threshold-slider">
+                                <span class="slider-value">50%</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>SMS Notifications</label>
+                                <p>Receive SMS alerts</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Email Notifications</label>
+                                <p>Receive email alerts</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detection Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <i class="fas fa-radar"></i>
+                        <h2>Detection Settings</h2>
+                    </div>
+                    <div class="settings-items">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Detection Sensitivity</label>
+                                <p>Adjust flood detection accuracy</p>
+                            </div>
+                            <div class="slider-container">
+                                <input type="range" min="1" max="100" value="75" class="sensitivity-slider">
+                                <span class="slider-value">75%</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>AI Detection</label>
+                                <p>Enable AI-powered analysis</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Recording Mode</label>
+                                <p>Choose recording option</p>
+                            </div>
+                            <select class="setting-select">
+                                <option>Always On</option>
+                                <option>Alert Only</option>
+                                <option>Manual</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Network Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <i class="fas fa-wifi"></i>
+                        <h2>Network Settings</h2>
+                    </div>
+                    <div class="settings-items">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Data Refresh Rate</label>
+                                <p>How often to update dashboard</p>
+                            </div>
+                            <select class="setting-select">
+                                <option>Real-time (1 sec)</option>
+                                <option>Fast (5 sec)</option>
+                                <option>Normal (10 sec)</option>
+                                <option>Slow (30 sec)</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Backup Connection</label>
+                                <p>Use backup network if main fails</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Connection Status</label>
+                                <p>Current network status</p>
+                            </div>
+                            <div class="status-badge connected">
+                                <span class="status-dot"></span>
+                                Connected
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <i class="fas fa-sliders-h"></i>
+                        <h2>System Settings</h2>
+                    </div>
+                    <div class="settings-items">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Language</label>
+                                <p>Choose preferred language</p>
+                            </div>
+                            <select class="setting-select">
+                                <option>English</option>
+                                <option>Tamil</option>
+                                <option>Hindi</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Dark Mode</label>
+                                <p>Enable dark theme</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <i class="fas fa-tools"></i>
+                        <h2>Actions</h2>
+                    </div>
+                    <div class="settings-items">
+                        <button class="action-btn primary">
+                            <i class="fas fa-download"></i>
+                            Download Report
+                        </button>
+                        <button class="action-btn secondary">
+                            <i class="fas fa-redo"></i>
+                            Reset to Default
+                        </button>
+                        <button class="action-btn danger">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="settings-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTV Flood Detection Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-areag"></div>
+            <div class="nav-items">
+                <div class="nav-item active">
+                    <i class="fas fa-th"></i>
+                </div>
+                <div class="nav-item" onclick="window.location.href='detail.html'">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="nav-item" onclick="window.location.href='settings.html'">
+                    <i class="fas fa-cog"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <h1 class="greeting">Good Morning</h1>
+                <div class="header-controls">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search your location">
+                    </div>
+                    <div class="theme-toggle">
+                        <input type="checkbox" id="themeCheckbox" class="theme-checkbox">
+                        <label for="themeCheckbox" class="theme-label">
+                            <span class="toggle-circle">
+                                <i class="fas fa-sun sun-icon"></i>
+                                <i class="fas fa-moon moon-icon"></i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="profile-avatar" onclick="window.location.href='login.html'">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Grid -->
+            <div class="main-grid">
+                <!-- Left Section - Locations & Weather -->
+                <div class="left-section">
+                    <!-- Location Cards -->
+                    <div class="locations-grid">
+                        <div class="location-card">
+                            <div class="location-info">
+                                <h3>Tirunelveli</h3>
+                                <p>Town - Street no: 12</p>
+                            </div>
+                            <div id="locationFloodBadge" class="flood-badge normal">
+                              <i class="fas fa-check-circle"></i>
+                              <span>NORMAL 0%</span>
+                            </div>
+                        </div>
+                        <div class="location-card">
+                            <div class="location-info">
+                                <h3>Chennai</h3>
+                                <p>Avadi - Street no: 17</p>
+                            </div>
+                            <div id="locationFloodBadge2" class="flood-badge normal">
+                                <i class="fas fa-cloud-sun-rain"></i>
+                                <span>Normal</span>
+                            </div>
+                        </div>
+                        <div class="location-card">
+                            <div class="location-info">
+                                <h3>Madurai</h3>
+                                <p>KK Nagar - Street no: 03</p>
+                            </div>
+                            <div id="locationFloodBadge3" class="flood-badge warning">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>Flood 45%</span>
+                            </div>
+                        </div>
+                        <div class="location-card">
+                            <div class="location-info">
+                                <h3>Chennai</h3>
+                                <p>Pallvaram - Street no: 09</p>
+                            </div>
+                            <div id="locationFloodBadge4" class="flood-badge normal">
+                                <i class="fas fa-cloud-sun"></i>
+                                <span>Normal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weather Forecast -->
+                    <div class="weather-section">
+                        <div class="weather-cards">
+                            <div class="weather-card active">
+                                <i class="fas fa-cloud-rain"></i>
+                                <p class="temp">86° <span>29°</span></p>
+                                <p class="day">Today</p>
+                            </div>
+                            <div class="weather-card">
+                                <i class="fas fa-cloud-sun"></i>
+                                <p class="temp">72° <span>24°</span></p>
+                                <p class="day">Mon</p>
+                            </div>
+                            <div class="weather-card">
+                                <i class="fas fa-wind"></i>
+                                <p class="temp">78° <span>25°</span></p>
+                                <p class="day">Tue</p>
+                            </div>
+                            <div class="weather-card">
+                                <i class="fas fa-cloud-sun"></i>
+                                <p class="temp">79° <span>27°</span></p>
+                                <p class="day">Wed</p>
+                            </div>
+                        </div>
+
+                        <!-- Chart Section -->
+                        <div class="chart-section">
+                            <canvas id="floodChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section - Video Feed -->
+               <div class="right-section">
+  <div class="video-feed">
+    <img id="videoStream"
+         src="http://172.17.177.79:5000/video_feed/cam1"
+         alt="CCTV Feed"
+         style="width:100%;height:100%;object-fit:cover;"
+         onerror="handleStreamError()" />
+
+    <div id="streamError"
+         style="display:none;position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.6);color:#fff;padding:12px 18px;border-radius:8px;font-weight:600;">
+      Stream unreachable. Retrying...
+    </div>
+
+    <div class="video-overlay">
+      <div class="video-info">
+        <span class="location-badge">Tirunelveli - Town, street no: 02</span>
+
+        <!-- ✅ only this changed -->
+    <span id="floodAlert" class="flood-alert normal">
+       <i class="fas fa-check-circle"></i> NORMAL 0%
+    </span>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+<script>
+(function () {
+  const STATUS_URL = "http://172.17.177.79:5000/status/cam4";
+
+  function applyBadge(el, data) {
+    if (!el) return;
+
+    const status = (data.status || "NORMAL").toUpperCase();
+    const flood = Number(data.flood_pct ?? 0);
+    const normal = Number(data.normal_pct ?? 0);
+
+    if (status === "FLOOD") {
+      // level based on flood %
+      let level = "low";
+      if (flood >= 40) level = "high";
+
+      // supports both: .flood-alert and .flood-badge
+      const baseClass = el.classList.contains("flood-badge") ? "flood-badge" : "flood-alert";
+      el.className = `${baseClass} ${level}`;
+      el.innerHTML = `<i class="fas fa-exclamation-triangle"></i> FLOOD ${flood}%`;
+      // if it's badge with span inside
+      if (baseClass === "flood-badge") el.innerHTML = `<i class="fas fa-exclamation-triangle"></i><span>FLOOD ${flood}%</span>`;
+    } else {
+      const baseClass = el.classList.contains("flood-badge") ? "flood-badge" : "flood-alert";
+      el.className = `${baseClass} normal`;
+      el.innerHTML = `<i class="fas fa-check-circle"></i> NORMAL ${normal}%`;
+      if (baseClass === "flood-badge") el.innerHTML = `<i class="fas fa-check-circle"></i><span>NORMAL ${normal}%</span>`;
+    }
+  }
+
+  async function updateStatus() {
+    const floodAlert = document.getElementById("floodAlert");
+    const locationFloodBadge = document.getElementById("locationFloodBadge");
+    // Prefer cached aggregate statuses written by detail page
+    try {
+        const cachedAgg = localStorage.getItem('cam_statuses');
+        if (cachedAgg) {
+            const parsedAgg = JSON.parse(cachedAgg);
+            applyBadge(document.getElementById('floodAlert'), parsedAgg.cam4 || parsedAgg.cam1 || parsedAgg);
+            applyBadge(document.getElementById('locationFloodBadge'), parsedAgg.cam1 || parsedAgg.cam4 || parsedAgg);
+            applyBadge(document.getElementById('locationFloodBadge2'), parsedAgg.cam2 || parsedAgg);
+            applyBadge(document.getElementById('locationFloodBadge3'), parsedAgg.cam3 || parsedAgg);
+            applyBadge(document.getElementById('locationFloodBadge4'), parsedAgg.cam4 || parsedAgg);
+            return;
+        }
+    } catch (err) {
+        console.warn('Failed to read cached cam statuses:', err);
+    }
+
+    // Fallback: fetch cam4 directly
+    try {
+        const res = await fetch(STATUS_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+
+        applyBadge(floodAlert, data);
+        applyBadge(locationFloodBadge, data);
+    } catch (e) {
+            // show OFFLINE on both if fetch fails
+            [document.getElementById("floodAlert"), document.getElementById("locationFloodBadge")].forEach(el => {
+                if (!el) return;
+                const baseClass = el.classList.contains("flood-badge") ? "flood-badge" : "flood-alert";
+                el.className = `${baseClass} offline`;
+                el.innerHTML = `<i class="fas fa-wifi"></i> OFFLINE`;
+                if (baseClass === "flood-badge") el.innerHTML = `<i class="fas fa-wifi"></i><span>OFFLINE</span>`;
+            });
+            console.log("Status update failed:", e);
+        }
+  }
+
+  // ✅ IMPORTANT: run after page is loaded
+  window.addEventListener("load", () => {
+    updateStatus();
+    setInterval(updateStatus, 1000);
+  });
+
+    // Listen for storage events so the homepage updates live when detail page writes statuses
+    window.addEventListener('storage', (e) => {
+        if (!e.key) return;
+        try {
+            if (e.key === 'cam_statuses' || e.key?.startsWith('cam') && e.key?.endsWith('_status')) {
+                const newVal = e.newValue ? JSON.parse(e.newValue) : null;
+
+                // If aggregate object provided, use fields; otherwise map single camN_status
+                if (e.key === 'cam_statuses' && newVal) {
+                    applyBadge(document.getElementById('floodAlert'), newVal.cam4 || newVal.cam1 || newVal);
+                    applyBadge(document.getElementById('locationFloodBadge'), newVal.cam1 || newVal);
+                    applyBadge(document.getElementById('locationFloodBadge2'), newVal.cam2 || newVal);
+                    applyBadge(document.getElementById('locationFloodBadge3'), newVal.cam3 || newVal);
+                    applyBadge(document.getElementById('locationFloodBadge4'), newVal.cam4 || newVal);
+                } else if (newVal && e.key) {
+                    // single camX_status key
+                    const camMatch = e.key.match(/^cam(\d+)_status$/);
+                    if (camMatch) {
+                        const camNum = Number(camMatch[1]);
+                        const badgeMap = {
+                            1: 'locationFloodBadge',
+                            2: 'locationFloodBadge2',
+                            3: 'locationFloodBadge3',
+                            4: 'locationFloodBadge4'
+                        };
+                        const targetId = badgeMap[camNum];
+                        if (targetId) applyBadge(document.getElementById(targetId), newVal);
+
+                        // Also update main floodAlert if cam4 changed
+                        if (camNum === 4) applyBadge(document.getElementById('floodAlert'), newVal);
+                    }
+                }
+            }
+        } catch (err) {
+            console.warn('storage event handler error', err);
+        }
+    });
+})();
+</script>
+
+<!-- Auto-rotating camera feed every 20 seconds -->
+<script>
+(function() {
+  const videoStream = document.getElementById('videoStream');
+  let currentCameraIndex = 0;
+  const cameras = ['cam1', 'cam2', 'cam3', 'cam4'];
+  
+  function rotateCamera() {
+    currentCameraIndex = (currentCameraIndex + 1) % cameras.length;
+    videoStream.src = `http://172.17.177.79:5000/video_feed/${cameras[currentCameraIndex]}`;
+  }
+  
+  // Rotate camera every 20 seconds
+  window.addEventListener("load", () => {
+    setInterval(rotateCamera, 20000);
+  });
+})();
+</script>
+
+
+
+
+</body>
+</html>

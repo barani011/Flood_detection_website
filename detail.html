@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCTV Feed Details - Flood Monitoring</title>
+    <link rel="stylesheet" href="detail-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="detail-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area"></div>
+            <div class="nav-items">
+                <div class="nav-item">
+                    <a href="index.html" title="Dashboard">
+                        <i class="fas fa-th"></i>
+                    </a>
+                </div>
+                <div class="nav-item active">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="nav-item" onclick="window.location.href='settings.html'">
+                    <i class="fas fa-cog"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="detail-main">
+            <!-- Header -->
+            <header class="detail-header">
+                <h1>CCTV Live Feed</h1>
+                <div class="header-controls">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search location...">
+                    </div>
+                    <div class="theme-toggle">
+                        <input type="checkbox" id="themeCheckbox" class="theme-checkbox">
+                        <label for="themeCheckbox" class="theme-label">
+                            <span class="toggle-circle">
+                                <i class="fas fa-sun sun-icon"></i>
+                                <i class="fas fa-moon moon-icon"></i>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="profile-avatar" onclick="window.location.href='login.html'">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Detail Grid -->
+            <div class="detail-grid">
+                <!-- Left Section - Main Feed with Info -->
+                <div class="left-section">
+                    <div class="feed-container">
+                        <div class="live-feed-detail">
+                            <img
+  id="mainFeedImage"
+  src="http://172.17.177.79:5000/video_feed/cam1"
+  style="
+    width:100%;
+    height:100%;
+    object-fit:contain;   /* IMPORTANT */
+    background:black;
+  "
+  alt="Live CCTV Feed"
+/>
+
+                        </div>
+
+                        <div class="feed-info-panel">
+                            <h3 id="mainFeedTitle">Tirunelveli - Town, street no: 02</h3>
+                            <div class="feed-badges">
+                                <span id="floodStatusBadge" class="flood-status-badge normal">
+                               <i class="fas fa-check-circle"></i> NORMAL 0%
+                                </span>
+
+                                <div class="alert-buttons">
+<button class="btn sms" onclick="sendSMSAlert()">📩 Send SMS Alert</button>
+</div>
+
+                            </div>
+                            <div class="feed-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Flood Level:</span>
+                                    <span class="meta-value high-text" id="mainFloodLevel">High</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Last Updated:</span>
+                                    <span class="meta-value" id="mainLastUpdated">11:28</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alerts Section -->
+                    <div class="alerts-section">
+                        <!-- Danger Notice -->
+                        <div class="alert-card danger" id="dangerNotice">
+                            <div class="alert-header">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h4>Danger Notice</h4>
+                            </div>
+                            <p id="dangerContent">Water levels in this area have risen above the safe limit due to continuous rainfall and overflow. The situation is critical.</p>
+                        </div>
+
+                        <!-- Vehicle Restriction -->
+                        <div class="alert-card restriction" id="vehicleRestriction">
+                            <div class="alert-header">
+                                <i class="fas fa-ban"></i>
+                                <h4>Vehicle Movement Restriction</h4>
+                            </div>
+                            <ul id="vehicleContent">
+                                <li>All two-wheelers, cars, and heavy vehicles are strictly prohibited</li>
+                                <li>Roads are submerged and unsafe</li>
+                                <li>Risk of engine damage, skidding, and being swept away</li>
+                                <li>Emergency vehicles only are permitted</li>
+                            </ul>
+                        </div>
+
+                        <!-- Emergency Services -->
+                        <div class="emergency-services">
+                            <h4>Emergency & Support Services</h4>
+                            <div class="services-grid">
+                                <div class="service-item">
+                                    <div class="service-content">
+                                        <i class="fas fa-phone"></i>
+                                        <span class="label">Disaster Response:</span>
+                                        <span class="phone">112 / 108</span>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-content">
+                                        <i class="fas fa-building"></i>
+                                        <span class="label">Local Control Room:</span>
+                                        <span class="phone">[Number]</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section - Camera List -->
+                <div class="right-section">
+                    <div class="cameras-header">
+                        <h3>Active Cameras</h3>
+                        <span class="camera-count">7 Active</span>
+                    </div>
+
+                    <div class="cameras-list">
+                        <!-- Camera 1 -->
+                        <div class="camera-item active" data-camera="1" data-title="Tirunelveli - Town, street no: 02" data-flood="92">
+                            <div class="camera-thumbnail">
+                                <img src="http://172.17.177.79:5000/video_feed/cam1" alt="Camera 1">
+                                <span class="live-badge">
+                                    <span class="live-dot"></span> LIVE
+                                </span>
+                            </div>
+                            <div class="camera-info">
+                                <h4>Camera 1</h4>
+                                <div class="camera-details">
+                                    <span class="flood-indicator high" id="cam1-status">
+                                        <i class="fas fa-exclamation-triangle"></i> Flood 92%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camera 2 -->
+                        <div class="camera-item" data-camera="2" data-title="Chennai - Avadi, street no: 17" data-flood="10">
+                            <div class="camera-thumbnail">
+                                <img src="http://172.17.177.79:5000/video_feed/cam2" alt="Camera 2">
+                                <span class="live-badge">
+                                    <span class="live-dot"></span> LIVE
+                                </span>
+                            </div>
+                            <div class="camera-info">
+                                <h4>Camera 2</h4>
+                                <div class="camera-details">
+                                    <span class="flood-indicator low" id="cam2-status">
+                                        <i class="fas fa-triangle-exclamation"></i> Flood 10%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camera 3 -->
+                        <div class="camera-item" data-camera="3" data-title="Madurai - KK Nagar, street no: 03" data-flood="89">
+                            <div class="camera-thumbnail">
+                                <img src="http://172.17.177.79:5000/video_feed/cam3" alt="Camera 3">
+                                <span class="live-badge">
+                                    <span class="live-dot"></span> LIVE
+                                </span>
+                            </div>
+                            <div class="camera-info">
+                                <h4>Camera 3</h4>
+                                <div class="camera-details">
+                                    <span class="flood-indicator high" id="cam3-status">
+                                        <i class="fas fa-exclamation-triangle"></i> Flood 89%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camera 4 -->
+                        <div class="camera-item" data-camera="4" data-title="Chennai - Pallvaram, street no: 09" data-flood="98">
+                            <div class="camera-thumbnail">
+                                <img src="http://172.17.177.79:5000/video_feed/cam4" alt="Camera 4">
+                                <span class="live-badge">
+                                    <span class="live-dot"></span> LIVE
+                                </span>
+                            </div>
+                            <div class="camera-info">
+                                <h4>Camera 4</h4>
+                                <div class="camera-details">
+                                    <span class="flood-indicator critical" id="cam4-status">
+                                        <i class="fas fa-exclamation-triangle"></i> Flood 98%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camera 5 -->
+                        <div class="camera-item" data-camera="5" data-title="Chennai - Pallvaram, street no: 09" data-flood="98">
+                            <div class="camera-thumbnail">
+                                <img src="http://172.17.177.79:5000/video_feed/cam5" alt="Camera 5">
+                                <span class="live-badge">
+                                    <span class="live-dot"></span> LIVE
+                                </span>
+                            </div>
+                            <div class="camera-info">
+                                <h4>Camera 5</h4>
+                                <div class="camera-details">
+                                    <span class="flood-indicator high" id="cam5-status">
+                                        <i class="fas fa-exclamation-triangle"></i> Flood 89%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camera 6 -->
+                        <div class="camera-item" data-camera="6" data-title="Coimbatore - North, street no: 12" data-flood="15">
+                            <div class="camera-thumbnail">
+                                <img src="http://172.17.177.79:5000/video_feed/cam6" alt="Camera 6">
+                                <span class="live-badge">
+                                    <span class="live-dot"></span> LIVE
+                                </span>
+                            </div>
+                            <div class="camera-info">
+                                <h4>Camera 6</h4>
+                                <div class="camera-details">
+                                    <span class="flood-indicator low" id="cam6-status">
+                                        <i class="fas fa-triangle-exclamation"></i> Flood 15%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Camera 7 -->
+                        <div class="camera-item" data-camera="7" data-title="Salem - East, street no: 21" data-flood="0">
+                            <div class="camera-thumbnail">
+                                <img src="http://172.17.177.79:5000/video_feed/cam7" alt="Camera 7">
+                                <span class="live-badge">
+                                    <span class="live-dot"></span> LIVE
+                                </span>
+                            </div>
+                            <div class="camera-info">
+                                <h4>Camera 7</h4>
+                                <div class="camera-details">
+                                    <span class="flood-indicator normal" id="cam7-status">
+                                        <i class="fas fa-check-circle"></i> Normal 100%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="detail-script.js"></script>
+<script>
+(function(){
+  let currentCamera = "cam1"; // Default camera
+  // expose initial value so other scripts can read it
+  window.currentCamera = currentCamera;
+
+  function setBadge(status, floodPct, normalPct){
+    if(!badge) return;
+
+    if(status === "FLOOD"){
+      let level = "low";
+      if(floodPct >= 70) level = "high";
+      else if(floodPct >= 40) level = "medium";
+
+      badge.className = "flood-status-badge " + level;
+      badge.innerHTML = `<i class="fas fa-exclamation-triangle"></i> FLOOD ${floodPct}%`;
+    } else {
+      badge.className = "flood-status-badge normal";
+      badge.innerHTML = `<i class="fas fa-check-circle"></i> NORMAL ${normalPct}%`;
+    }
+    
+    // Update main feed info
+    if (window.updateMainFeedInfo) {
+      window.updateMainFeedInfo(floodPct);
+    }
+    
+    // Update alert notices when status changes
+    if (window.updateAlertNotices) {
+      window.updateAlertNotices(status);
+    }
+  }
+
+  async function update(){
+    try{
+      const res = await fetch(STATUS_URL_BASE + currentCamera, { cache: "no-store" });
+      if(!res.ok) throw new Error("HTTP " + res.status);
+
+      const data = await res.json();
+      const status = (data.status || "NORMAL").toUpperCase();
+      const floodPct = Number(data.flood_pct ?? 0);
+      const normalPct = Number(data.normal_pct ?? 0);
+
+      setBadge(status, floodPct, normalPct);
+    } catch(err){
+      badge.className = "flood-status-badge offline";
+      badge.innerHTML = `<i class="fas fa-wifi"></i> OFFLINE`;
+      console.log("Status error:", err);
+    }
+  }
+
+  // Expose currentCamera globally for camera click handlers
+  window.setCurrentCamera = function(camNum) {
+    currentCamera = "cam" + camNum;
+    window.currentCamera = currentCamera; // keep global copy in sync
+    // fetch status for the selected camera and then refresh the entire list
+    update().catch(() => {})
+          .finally(() => {
+              if (typeof updateAllCameraStatuses === 'function') {
+                  updateAllCameraStatuses();
+              }
+          });
+  };
+
+  // run after page loads
+  window.addEventListener("load", () => {
+    update();
+    // Update main feed info every second
+    setInterval(update, 1000);
+    // Update all camera statuses every 2 seconds
+    setInterval(updateAllCameraStatuses, 2000);
+    // Initial camera status update
+    updateAllCameraStatuses();
+  });
+})();
+</script>
+
+<script>
+function getCamId() {
+  return document.getElementById("camSelect").value;
+}
+</script>
+<script>
+function sendSMSAlert() {
+  fetch("http://172.17.177.79:5001/send-alert", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      cam_id: window.currentCamera || "cam1"
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.sms === "sent") {
+      alert(
+`📩 SMS Sent ✅
+Camera: ${data.cam_id.toUpperCase()}
+Flood: ${data.detection.flood_pct}%
+Risk: ${data.detection.level}`
+      );
+    } else {
+      alert("❌ SMS Failed\n" + data.sms_error);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("❌ SMS Request Failed");
+  });
+}
+</script>
+
+
+</body>
+</html>
